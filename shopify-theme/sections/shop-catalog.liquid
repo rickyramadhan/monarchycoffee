@@ -1,0 +1,52 @@
+{{ 'shop-catalog.css' | asset_url | stylesheet_tag }}
+<section class="page-head container shop-page-head">
+  <div class="breadcrumb"><a href="{{ routes.root_url }}">Beranda</a> / Belanja kopi</div>
+  <span class="eyebrow">YOUR EVERYDAY COFFEE, SORTED.</span>
+  <h1>Temukan kopi Anda.</h1>
+  <p>Empat signature blend, kapsul yang praktis, dan mesin untuk melengkapi ritual kopi Anda.</p>
+</section>
+<section class="container shop-bottom shop-catalog" id="ShopCatalog">
+  <div class="shop-tools">
+    <div class="tabs" role="group" aria-label="Kategori produk">
+      <button class="tab active" type="button" data-catalog-category="all" aria-pressed="true">Semua produk</button>
+      <button class="tab" type="button" data-catalog-category="Coffee beans" aria-pressed="false">Coffee beans</button>
+      <button class="tab" type="button" data-catalog-category="Capsules" aria-pressed="false">Capsules</button>
+      <button class="tab" type="button" data-catalog-category="Mesin kopi" aria-pressed="false">Mesin kopi</button>
+    </div>
+    <label class="sort">Urutkan
+      <select data-catalog-sort>
+        <option value="featured">Pilihan Monarchy</option>
+        <option value="low">Harga terendah</option>
+        <option value="high">Harga tertinggi</option>
+        <option value="name">Nama A–Z</option>
+      </select>
+    </label>
+  </div>
+  <label class="search-box">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+    <input type="search" data-catalog-search placeholder="Cari kopi, karakter rasa, atau mesin…" aria-label="Cari produk">
+  </label>
+  {% paginate collections.all.products by section.settings.products_per_page %}
+    <p class="small muted catalog-count" data-catalog-count aria-live="polite">{{ paginate.items }} produk</p>
+    <div class="products-grid" data-catalog-grid>
+      {% for product in collections.all.products %}
+        <div data-catalog-item data-type="{{ product.type | escape }}" data-title="{{ product.title | escape }}" data-price="{{ product.price }}" data-search="{{ product.title | append: ' ' | append: product.type | append: ' ' | append: product.description | strip_html | escape }}">
+          {% render 'product-card', card_product: product %}
+        </div>
+      {% else %}
+        <p>Belum ada produk tersedia.</p>
+      {% endfor %}
+    </div>
+    <p class="empty" data-catalog-empty hidden>Tidak ada produk yang cocok. Ubah pencarian atau kategori.</p>
+    {% if paginate.pages > 1 %}
+      <nav class="pagination" aria-label="Navigasi halaman">
+        {% if paginate.previous %}<a href="{{ paginate.previous.url }}">Sebelumnya</a>{% endif %}
+        <span>{{ paginate.current_page }} / {{ paginate.pages }}</span>
+        {% if paginate.next %}<a href="{{ paginate.next.url }}">Berikutnya</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% endpaginate %}
+</section>
+<section class="cta-band"><div><h2>Belanja untuk usaha?</h2><p>Diskusikan pasokan rutin, mesin, dan kebutuhan khusus bisnis Anda.</p></div><a href="/pages/untuk-bisnis#BusinessContact" class="btn">Konsultasi Kebutuhan</a></section>
+<script src="{{ 'shop-catalog.js' | asset_url }}" defer></script>
+{% schema %}{"name":"Shop catalog","settings":[{"type":"range","id":"products_per_page","label":"Products per page","min":4,"max":48,"step":4,"default":12}]}{% endschema %}

@@ -1,0 +1,56 @@
+{
+  "sections": {
+    "main": {
+      "type": "story-page",
+      "blocks": {
+        "year_2012": {
+          "type": "milestone",
+          "settings": {
+            "year": "2012",
+            "title": "Awal perjalanan",
+            "copy": "Memulai micro roastery untuk segmen hotel, kafe, dan restoran."
+          }
+        },
+        "year_2014": {
+          "type": "milestone",
+          "settings": {
+            "year": "2014",
+            "title": "Kapasitas baru",
+            "copy": "Investasi mesin roasting berkapasitas 15 kg per batch."
+          }
+        },
+        "year_2019": {
+          "type": "milestone",
+          "settings": {
+            "year": "2019",
+            "title": "Wajah Monarchy",
+            "copy": "Pembaruan brand, identitas visual, dan kemasan produk."
+          }
+        },
+        "year_2021": {
+          "type": "milestone",
+          "settings": {
+            "year": "2021",
+            "title": "Bersama hospitality",
+            "copy": "Mengembangkan kerja sama pengadaan kopi dengan jaringan hotel."
+          }
+        },
+        "year_2023": {
+          "type": "milestone",
+          "settings": {
+            "year": "2023",
+            "title": "Terus berkembang",
+            "copy": "Memperluas portofolio melalui pengembangan produk."
+          }
+        }
+      },
+      "block_order": ["year_2012", "year_2014", "year_2019", "year_2021", "year_2023"],
+      "settings": {
+        "primary_link": "/collections/all",
+        "secondary_link": "/pages/untuk-bisnis",
+        "cta_link": "/pages/untuk-bisnis"
+      }
+    }
+  },
+  "order": ["main"]
+}

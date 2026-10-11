@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'id' }}" data-root-url="{{ routes.root_url }}" data-currency="{{ cart.currency.iso_code | default: shop.currency }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_ink }}">
+  <title>{% if page_title %}{{ page_title | escape }}{% else %}{{ shop.name | escape }}{% endif %}{% unless page_title contains shop.name %} — {{ shop.name | escape }}{% endunless %}</title>
+  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="icon" href="{{ settings.favicon | image_url: width: 64 }}" type="image/png">
+  {{ content_for_header }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {% if request.page_type == 'page' and page.handle == 'untuk-bisnis' %}{{ 'business.css' | asset_url | stylesheet_tag }}{% endif %}
+  <style>:root{--paper:{{ settings.color_paper }};--ink:{{ settings.color_ink }};--yellow:{{ settings.color_yellow }};--brown:{{ settings.color_brown }};--color-paper:{{ settings.color_paper }};--color-ink:{{ settings.color_ink }};--color-yellow:{{ settings.color_yellow }};--color-brown:{{ settings.color_brown }}}</style>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  {% if request.page_type == 'page' and page.handle == 'untuk-bisnis' %}<script src="{{ 'business.js' | asset_url }}" defer></script>{% endif %}
+</head>
+<body>
+  <a class="skip" href="#MainContent">Lewati ke konten</a>
+  {% sections 'header-group' %}
+  <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
+  {% sections 'footer-group' %}
+  <dialog id="CartDrawer" class="cart-drawer" aria-labelledby="CartDrawerTitle" data-cart-title="{{ settings.cart_title | escape }}" data-cart-remove="{{ settings.cart_remove | escape }}" data-cart-subtotal="{{ settings.cart_subtotal | escape }}" data-cart-shipping-note="{{ settings.cart_shipping_note | escape }}" data-cart-checkout="{{ settings.cart_checkout | escape }}" data-cart-view="{{ settings.cart_view | escape }}" data-cart-empty="{{ settings.cart_empty | escape }}" data-cart-browse="{{ settings.cart_browse | escape }}" data-cart-load-error="{{ settings.cart_load_error | escape }}" data-cart-remove-error="{{ settings.cart_remove_error | escape }}" data-cart-add-error="{{ settings.cart_add_error | escape }}"><div class="cart-drawer-inner"><div class="drawer-head"><h2 id="CartDrawerTitle">{{ settings.cart_title | escape }}</h2><button type="button" data-cart-close aria-label="{{ settings.cart_close | escape }}">×</button></div><div data-cart-content></div></div></dialog>
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+  <aside class="whatsapp-support" aria-label="Bantuan WhatsApp">
+    <div class="whatsapp-bubble" role="status">
+      <button class="whatsapp-bubble-close" type="button" aria-label="Tutup pesan bantuan" data-whatsapp-dismiss>×</button>
+      <span class="whatsapp-bubble-kicker">MONARCHY COFFEE</span>
+      <p><strong>Butuh bantuan?</strong><br>Tim kami siap membantu Anda memilih kopi atau membahas kebutuhan bisnis.</p>
+      <span class="whatsapp-bubble-hint">Chat kami di WhatsApp</span>
+    </div>
+    <a class="whatsapp-float" href="#" aria-label="Hubungi Monarchy Coffee melalui WhatsApp" title="WhatsApp" aria-disabled="true" data-whatsapp-link>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5A12.3 12.3 0 0 0 5.4 22l-1.6 6 6.2-1.6A12.4 12.4 0 1 0 16 3.5Zm0 22.4c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.3-.4a10 10 0 1 1 8.4 4.6Zm5.5-7.5c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.7l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.4a12 12 0 0 0 4.8 4.2c.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2.1-1.4s.3-1.3.2-1.4-.2-.2-.5-.4Z"/></svg>
+    </a>
+  </aside>
+  <script>
+    (() => {
+      const support = document.querySelector('.whatsapp-support');
+      const bubble = support?.querySelector('.whatsapp-bubble');
+      if (!support || !bubble) return;
+      window.setTimeout(() => support.classList.add('is-visible'), 4000);
+      support.querySelector('[data-whatsapp-dismiss]')?.addEventListener('click', () => bubble.hidden = true);
+      support.querySelector('[data-whatsapp-link]')?.addEventListener('click', event => {
+        if (event.currentTarget.getAttribute('aria-disabled') === 'true') event.preventDefault();
+      });
+    })();
+  </script>
+</body>
+</html>

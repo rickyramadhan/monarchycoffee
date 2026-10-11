@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'id' }}" data-root-url="{{ routes.root_url }}" data-currency="{{ cart.currency.iso_code | default: shop.currency }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_ink }}">
+  <title>{% if page_title %}{{ page_title | escape }}{% else %}{{ shop.name | escape }}{% endif %}{% unless page_title contains shop.name %} — {{ shop.name | escape }}{% endunless %}</title>
+  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="icon" href="{{ settings.favicon | image_url: width: 64 }}" type="image/png">
+  {{ content_for_header }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {% if request.page_type == 'page' and page.handle == 'untuk-bisnis' %}{{ 'business.css' | asset_url | stylesheet_tag }}{% endif %}
+  <style>:root{--paper:{{ settings.color_paper }};--ink:{{ settings.color_ink }};--yellow:{{ settings.color_yellow }};--brown:{{ settings.color_brown }};--color-paper:{{ settings.color_paper }};--color-ink:{{ settings.color_ink }};--color-yellow:{{ settings.color_yellow }};--color-brown:{{ settings.color_brown }}}</style>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  {% if request.page_type == 'page' and page.handle == 'untuk-bisnis' %}<script src="{{ 'business.js' | asset_url }}" defer></script>{% endif %}
+</head>
+<body>
+  <a class="skip" href="#MainContent">Lewati ke konten</a>
+  {% sections 'header-group' %}
+  <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
+  {% sections 'footer-group' %}
+  <dialog id="CartDrawer" class="cart-drawer" aria-labelledby="CartDrawerTitle" data-cart-title="{{ settings.cart_title | escape }}" data-cart-remove="{{ settings.cart_remove | escape }}" data-cart-subtotal="{{ settings.cart_subtotal | escape }}" data-cart-shipping-note="{{ settings.cart_shipping_note | escape }}" data-cart-checkout="{{ settings.cart_checkout | escape }}" data-cart-view="{{ settings.cart_view | escape }}" data-cart-empty="{{ settings.cart_empty | escape }}" data-cart-browse="{{ settings.cart_browse | escape }}" data-cart-load-error="{{ settings.cart_load_error | escape }}" data-cart-remove-error="{{ settings.cart_remove_error | escape }}" data-cart-add-error="{{ settings.cart_add_error | escape }}"><div class="cart-drawer-inner"><div class="drawer-head"><h2 id="CartDrawerTitle">{{ settings.cart_title | escape }}</h2><button type="button" data-cart-close aria-label="{{ settings.cart_close | escape }}">×</button></div><div data-cart-content></div></div></dialog>
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+  <a class="contact-float" href="mailto:info@monarchycoffee.com" aria-label="Kirim email ke Monarchy Coffee" title="Email Monarchy Coffee">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg>
+  </a>
+</body>
+</html>

@@ -1,0 +1,27 @@
+#ShopCatalog [data-catalog-item] { display: contents; }
+#ShopCatalog [data-catalog-item][hidden] { display: none !important; }
+#ShopCatalog .catalog-count { margin: 0 0 22px; }
+.shop-page-head > p { max-width: 680px; margin-top: 18px; }
+.shop-catalog .shop-tools { align-items: center; gap: 16px; }
+.shop-catalog .tabs { gap: 8px; }
+.shop-catalog .tab { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 30px; padding: 9px 18px; background: transparent; color: var(--ink); line-height: 1.4; }
+.shop-catalog .tab:hover { background: var(--cream); }
+.shop-catalog .tab.active { color: #fff; background: var(--ink); border-color: var(--ink); }
+.shop-catalog .catalog-sort { margin-left: auto; }
+#ShopCatalog .search-box { display: flex; align-items: center; gap: 14px; width: 100%; margin: 25px 0; border: 0; border-bottom: 1px solid var(--ink); padding: 0; }
+#ShopCatalog .search-box svg { flex: 0 0 20px; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+#ShopCatalog .search-box input { flex: 1; width: 100%; min-width: 0; min-height: 0; border: 0; border-radius: 0; background: transparent; padding: 16px 0; color: var(--ink); font-size: 1.2rem; outline: none; box-shadow: none; }
+#ShopCatalog .search-box input:focus { outline: none; box-shadow: none; }
+#ShopCatalog + .cta-band { display: flex; align-items: center; justify-content: space-between; gap: 25px; margin: 0; padding: 45px 5.6%; border-radius: 0; background: var(--yellow); }
+#ShopCatalog + .cta-band > div { max-width: 680px; }
+#ShopCatalog + .cta-band h2 { margin: 0; font-size: 2.4rem; line-height: 1.2; }
+#ShopCatalog + .cta-band p { margin: 10px 0 0; color: #655326; }
+#ShopCatalog + .cta-band .btn { flex: 0 0 auto; min-height: 48px; padding: 12px 22px; }
+.shop-catalog .pagination { margin-top: 36px; }
+@media (max-width: 800px) {
+  .shop-catalog .shop-tools { align-items: flex-start; flex-direction: column; }
+  .shop-catalog .catalog-sort { margin-left: 0; }
+  .shop-catalog .tabs { max-width: 100%; overflow-x: auto; }
+  #ShopCatalog + .cta-band { align-items: flex-start; flex-direction: column; gap: 22px; padding: 36px 6%; }
+  #ShopCatalog + .cta-band h2 { font-size: 2rem; }
+}

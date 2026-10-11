@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "main": {
+      "type": "coffee-guide-page",
+      "blocks": {
+        "taste": {
+          "type": "guide",
+          "settings": {
+            "title": "Kopi seperti apa yang Anda suka?",
+            "copy": "Mulai dari rasa. Temukan blend untuk kopi susu, kopi hitam, atau espresso favorit Anda.",
+            "link_label": "Temukan blend Anda",
+            "link": "/collections/all"
+          }
+        },
+        "grind": {
+          "type": "guide",
+          "settings": {
+            "title": "Biji utuh atau kopi giling?",
+            "copy": "Kenali pilihan yang cocok dengan alat seduh di rumah, supaya tidak salah pilih.",
+            "link_label": "Kenali gilingan kopi",
+            "link": "/pages/coffee-guide#guide-grind"
+          }
+        },
+        "capsule": {
+          "type": "guide",
+          "settings": {
+            "title": "Sudut kopi, tanpa ribet.",
+            "copy": "Nikmati kopi berkualitas dengan cara yang praktis lewat kapsul kopi.",
+            "link_label": "Baca panduan kapsul",
+            "link": "/pages/kapsul-kopi"
+          }
+        }
+      },
+      "block_order": ["taste", "grind", "capsule"],
+      "settings": {
+        "button_link": "/collections/all"
+      }
+    }
+  },
+  "order": ["main"]
+}

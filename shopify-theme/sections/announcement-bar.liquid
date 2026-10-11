@@ -1,0 +1,2 @@
+<div class="announcement"><span>{{ section.settings.text | escape }}</span><a href="{{ section.settings.link | default: routes.all_products_collection_url }}">{{ section.settings.link_text | escape }}</a></div>
+{% schema %}{"name":"Announcement bar","settings":[{"type":"text","id":"text","label":"Announcement","default":"ROASTED WITH PURPOSE. ENJOYED EVERY DAY."},{"type":"text","id":"link_text","label":"Link text","default":"Kopi untuk bisnis Anda · Kenali solusinya"},{"type":"url","id":"link","label":"Link"}],"presets":[{"name":"Announcement bar"}]}{% endschema %}

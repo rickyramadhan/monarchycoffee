@@ -1,0 +1,46 @@
+{% assign related_products = recommendations.products %}
+{% if related_products == blank %}{% assign related_products = collections.all.products %}{% endif %}
+{% assign related_count = 0 %}
+{% for card_product in related_products limit: 50 %}{% unless card_product.id == product.id %}{% assign related_count = related_count | plus: 1 %}{% endunless %}{% endfor %}
+{% if related_count > 0 %}
+<section class="section container product-recommendations" data-product-recommendations>
+  <div class="section-heading"><div><span class="eyebrow">{{ section.settings.eyebrow | escape }}</span><h2>{{ section.settings.heading | escape }}</h2></div><a href="{{ routes.all_products_collection_url }}" class="text-link">{{ section.settings.link_label | escape }}</a></div>
+  <div class="products-grid">
+    {% assign rendered_count = 0 %}
+    {% for card_product in related_products limit: 50 %}
+      {% unless card_product.id == product.id or rendered_count >= 4 %}
+        {% assign rendered_count = rendered_count | plus: 1 %}
+        <article class="product-card">
+          {% assign card_color = card_product.metafields.custom.card_color | default: '#f2eee5' %}
+          {% assign card_tag = card_product.metafields.custom.product_tag %}
+          {% assign card_symbol = card_product.metafields.custom.product_symbol %}
+          {% assign card_type = card_product.type | default: 'Coffee' %}
+          {% assign card_unit = card_product.metafields.custom.package_size %}
+          {% assign notes = card_product.metafields.custom.taste_notes.value %}
+          {% case card_product.handle %}
+            {% when 'spade-blend' %}{% assign card_color = '#ede9df' %}{% assign card_tag = 'Bold & intense' %}{% assign card_symbol = '♠' %}{% assign card_type = 'Signature espresso blend' %}{% assign card_unit = '1 kg' %}{% assign notes = 'Dark chocolate · Roasted nuts · Caramel' %}
+            {% when 'love-blend' %}{% assign card_color = '#f0e4dc' %}{% assign card_tag = 'Smooth & balanced' %}{% assign card_symbol = '♥' %}{% assign card_type = 'Signature espresso blend' %}{% assign card_unit = '1 kg' %}{% assign notes = 'Dark chocolate · Caramel · Fruity sweetness' %}
+            {% when 'club-blend' %}{% assign card_color = '#e5e8df' %}{% assign card_tag = 'Clean & aromatic' %}{% assign card_symbol = '♣' %}{% assign card_type = 'Signature espresso blend' %}{% assign card_unit = '1 kg' %}{% assign notes = 'Dark chocolate · Caramel · Toasted nuts' %}
+            {% when 'diamond-espresso' %}{% assign card_color = '#e6e6e9' %}{% assign card_tag = 'Sweet & expressive' %}{% assign card_symbol = '♦' %}{% assign card_type = 'Signature espresso blend' %}{% assign card_unit = '1 kg' %}{% assign notes = 'Ripe fruit · Caramel · Milk chocolate' %}
+            {% when 'americano-capsule' %}{% assign card_color = '#eeebe3' %}{% assign card_tag = 'Everyday ritual' %}{% assign card_type = 'Coffee capsule' %}{% assign card_unit = '10 kapsul' %}{% assign notes = 'Kopi favorit, dengan cara yang lebih praktis.' %}
+            {% when 'sumatra-capsule' %}{% assign card_color = '#e2e9ea' %}{% assign card_tag = 'Single origin' %}{% assign card_type = 'Coffee capsule' %}{% assign card_unit = '10 kapsul' %}{% assign notes = 'Pilihan single origin dalam satu kapsul.' %}
+            {% when 'monarchy-capsule-machine' %}{% assign card_color = '#ede9e2' %}{% assign card_tag = 'Brew at home' %}{% assign card_type = 'Coffee equipment' %}{% assign card_unit = 'unit' %}{% assign notes = 'Sudut kopi favorit Anda, dimulai di sini.' %}
+          {% endcase %}
+          <a class="product-image{% if card_product.metafields.custom.product_photo.value %} photo{% endif %}" href="{{ card_product.url }}" style="background:{{ card_color }}" aria-label="{{ section.settings.view_prefix | escape }} {{ card_product.title | escape }}">
+            {% if card_tag != blank %}<span class="product-tag">{{ card_tag | escape }}</span>{% endif %}
+            {% if card_product.featured_image %}{{ card_product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '320, 480, 700', sizes: '(min-width: 800px) 25vw, 50vw', alt: card_product.featured_image.alt }}{% endif %}
+            <span class="product-mark" aria-hidden="true">{{ card_symbol | escape }}</span>
+          </a>
+          <div class="product-info"><div class="micro">{{ card_type | escape }}</div><h3><a href="{{ card_product.url }}">{{ card_product.title | escape }}</a></h3>
+            <p>{% if notes != blank %}{% if notes.first %}{{ notes | join: ' · ' | escape }}{% else %}{{ notes | escape }}{% endif %}{% else %}{{ card_product.metafields.custom.short_description | default: card_product.description | strip_html | truncate: 90 | escape }}{% endif %}</p>
+            <div class="product-buy"><span class="price">{{ card_product.price | money }}{% if card_unit != blank %}<small> / {{ card_unit | escape }}</small>{% endif %}</span><a class="add-btn" href="{{ card_product.url }}" aria-label="{{ section.settings.view_prefix | escape }} {{ card_product.title | escape }}">+</a></div>
+          </div>
+        </article>
+      {% endunless %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% schema %}
+{"name":"Product recommendations","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"KEEP EXPLORING"},{"type":"text","id":"heading","label":"Heading","default":"Kenali rasa lainnya."},{"type":"text","id":"link_label","label":"All products link","default":"Semua produk"},{"type":"text","id":"view_prefix","label":"Product link accessible label","default":"Lihat"}],"presets":[{"name":"Product recommendations"}]}
+{% endschema %}
